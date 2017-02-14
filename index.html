@@ -1,0 +1,107 @@
+<?php
+/*************************************
+ *CREATED :2017/2/14
+ *TEXT    :详单查询
+ *EMAIL   :dksx@qq.com
+ *************************************/
+?>
+<!DOCTYPE html >
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>详单</title>
+	<link href="//cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="http://ddcxx.cn/lib/bootstrap-table.min.css">
+	<script src="http://apps.bdimg.com/libs/jquery/1.11.3/jquery.js"></script>
+	<script src="//cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="http://ddcxx.cn/lib/bootstrap-table.min.js"></script>
+
+<style>
+body{
+	background-color: #FFF;
+	margin:0 auto;
+	text-align:center;
+}
+h3{
+	text-align:left;
+	margin-left:15px;
+}
+#carsearch{
+	width:196px;
+	margin-right:0px;
+	display: inline;
+}
+#toolbar{
+	
+}
+table{
+	background-color: #FFF;
+}
+</style>
+</head>
+<body >
+
+<div style="max-width:800px;margin:0 auto">
+	<h4 class="alert alert-info">湖南移动详单查询</h4>
+	<div id="toolbar1" class="form-inline" style="">
+		<input type="text" class="form-control" id="carsearch" style="display:none" placeholder="搜索">
+		<button class="btn btn-default" type="button" id="refresh" style="display:none" title="刷新"><i class="glyphicon glyphicon-refresh icon-refresh"></i></button>
+		<input type="text" class="form-control" id="session" placeholder="EcSite.session.id" style="width:320px">
+		<input type="text" class="form-control" id="yearMonth" placeholder="YearMonth" value="" style="width:150px">
+		<input type="text" class="form-control" id="startDay" placeholder="startDay" value="" style="width:100px">
+		<input type="text" class="form-control" id="endDay" placeholder="EndDay" value="" style="width:100px">
+		<button class="btn btn-info" type="button" id="query" title="Query">Query</button>
+	</div> 
+	<table  id="table1"  data-undefined-text="无" data-pagination="true"  data-search="false"data-show-refresh="false"  data-page-list="[10,50, 100, 200, ALL]" data-toolbar="#toolbar1" >
+	</table>
+	<h4 class="alert alert-info">Powered by Gxunda@Gmail.com</h4>
+</div>
+
+<script>
+function geturl(){
+	return 'xdapi.php?session='+$('#session').val()+
+				'&yearMonth='+$('#yearMonth').val()+
+				'&startDay='+$('#startDay').val()+
+				'&endDay='+$('#endDay').val();
+}
+function init(){
+$('#table1').bootstrapTable({
+				url: '',
+				striped: true,        
+				columns: [
+				{
+					field: 'RSRV_STR1',
+					title: '开始时间'
+				},
+				{
+					field: 'RSRV_STR3',
+					title: '联网方式'
+				}, 
+				{
+					field: 'RSRV_STR4',
+					title: '上网时间'
+				}, {
+					field: 'RSRV_STR5N',
+					title: '总使用流量'
+				},{
+					field: 'RSRV_STR6',
+					title: '计费方式'
+				},{
+					field: 'RSRV_STR9',
+					title: '免费流量(M)'
+				} ]
+			});
+		//$('#toolbar1').css("margin-left",parseInt($('#table1').css('width'))-239+"px");
+}
+init();
+$("#carsearch").keyup(function(){
+	var plt=$('#carsearch').val();
+	if(plt)$('#table1').bootstrapTable('filterBy',{'plate':plt});
+	else $('#table1').bootstrapTable('filterBy',null);
+});	
+$("#refresh").click(function(){
+	$('#table1').bootstrapTable('refresh',{url:geturl()});
+});	
+
+</script>
+</body>
