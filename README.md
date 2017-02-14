@@ -1,5 +1,5 @@
 # A-simple-PHP-Curl
 To get GPRS List  
-#3Format  
+##Format  
 YearMonth:YYYYMM  
 Day：DD  
